@@ -1,0 +1,44 @@
+{
+  "name": "dsh-model-provider-label",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "Shows the selected model's provider as a separate tag beside its name in the composer's model selector.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m-hosseinpour/dsh-web-plugins.git",
+    "directory": "plugins/model-provider-label"
+  },
+  "engines": {
+    "dsh": "^0.2.1-rc.5"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "docs/*.png"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-model-selection",
+        "@deepseek-ai/dsh-client-ui-renderer"
+      ]
+    }
+  }
+}

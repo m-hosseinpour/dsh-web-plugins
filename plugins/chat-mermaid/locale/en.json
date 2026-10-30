@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Chat mermaid diagrams",
+    "description": "Renders ```mermaid code blocks in chat messages as diagrams, keeping the source one click away."
+  }
+}

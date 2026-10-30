@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Chat mermaid diagrams">
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#eaf0fe"/>
+  <rect x="22" y="11" width="20" height="12" rx="4" fill="#ffffff" stroke="#2f6bff" stroke-width="2.5"/>
+  <rect x="7" y="41" width="19" height="12" rx="4" fill="#ffffff" stroke="#7a4dff" stroke-width="2.5"/>
+  <rect x="38" y="41" width="19" height="12" rx="4" fill="#ffffff" stroke="#2f6bff" stroke-width="2.5"/>
+  <path d="M32 23v7H16.5v11" fill="none" stroke="#7a4dff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M32 30h15.5v11" fill="none" stroke="#2f6bff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="32" cy="30" r="2.6" fill="#2f6bff"/>
+</svg>

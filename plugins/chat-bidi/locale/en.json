@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Chat bidi layout",
+    "description": "Gives every chat message block, every answer option in the agent's question card, every session or workspace name in the sidebar, and every Markdown or plain-text document in the right sidebar's preview the text direction of its own content, so right-to-left text reads and aligns correctly while code stays left-to-right."
+  }
+}

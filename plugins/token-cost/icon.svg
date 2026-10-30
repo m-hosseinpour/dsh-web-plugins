@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Token cost">
+  <rect width="64" height="64" rx="14" fill="#12344d"/>
+  <ellipse cx="32" cy="19" rx="13" ry="5.5" fill="#7fd7b2"/>
+  <path d="M19 19v20c0 3 5.8 5.5 13 5.5s13-2.5 13-5.5V19" fill="none" stroke="#7fd7b2" stroke-width="3.5"/>
+  <path d="M19 29c0 3 5.8 5.5 13 5.5s13-2.5 13-5.5" fill="none" stroke="#7fd7b2" stroke-width="3.5"/>
+  <circle cx="45" cy="43" r="11" fill="#f2c14e" stroke="#12344d" stroke-width="2.5"/>
+  <path d="M45 36.5v13M48.4 39.4c-.8-1.2-2-1.9-3.6-1.9-2.1 0-3.6 1.2-3.6 2.9 0 4 7.4 2.3 7.4 6.2 0 1.8-1.6 3-3.8 3-1.7 0-3-.8-3.8-2.1" fill="none" stroke="#12344d" stroke-width="2.2" stroke-linecap="round"/>
+</svg>

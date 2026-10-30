@@ -1,0 +1,44 @@
+{
+  "name": "dsh-token-cost",
+  "version": "1.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "Adds US-dollar and toman cost lines to the token-usage popover, priced from AvalAI public rates and exchange rate.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m-hosseinpour/dsh-web-plugins.git",
+    "directory": "plugins/token-cost"
+  },
+  "engines": {
+    "dsh": "^0.2.1-rc.5"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "docs/*.png"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-chat",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  }
+}

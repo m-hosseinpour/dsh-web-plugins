@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Model provider label",
+    "description": "Shows which provider the selected model comes from as a separate tag beside the model name in the composer's model selector."
+  }
+}

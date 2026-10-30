@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "AvalAI Credit Bar",
+    "description": "Shows the AvalAI account's packages and their remaining amounts, plus the main balance, in a strip above the message composer."
+  }
+}

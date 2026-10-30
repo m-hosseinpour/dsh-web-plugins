@@ -1,0 +1,41 @@
+{
+  "name": "dsh-chat-mermaid",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "Renders ```mermaid code blocks in chat messages as diagrams, with a toggle back to the source.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m-hosseinpour/dsh-web-plugins.git",
+    "directory": "plugins/chat-mermaid"
+  },
+  "engines": {
+    "dsh": "^0.2.1-rc.5"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "vendor/**",
+    "docs/*.png",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true
+    }
+  }
+}

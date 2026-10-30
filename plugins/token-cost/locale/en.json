@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Token Cost (USD + Toman)",
+    "description": "Adds US-dollar and toman cost lines to the token-usage popover, priced from AvalAI's public model rates and exchange rate."
+  }
+}

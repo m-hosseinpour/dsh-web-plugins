@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Delete Session",
+    "description": "Adds \"Delete session\" to the sidebar's \"...\" menu: a second click permanently removes that session's log and cached history from disk."
+  }
+}

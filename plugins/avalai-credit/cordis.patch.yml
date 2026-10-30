@@ -1,0 +1,6 @@
+- insert:
+    - id: avalai-credit
+      name: 'dsh-avalai-credit'
+      config:
+        credentialRef: AVAL_AI_API_KEY
+        baseURL: https://api.avalai.ir

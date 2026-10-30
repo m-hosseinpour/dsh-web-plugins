@@ -1,0 +1,9 @@
+- insert:
+    - id: token-cost
+      name: 'dsh-token-cost'
+      config:
+        baseURL: https://api.avalai.ir
+        hosts:
+          - api.avalai.ir
+        cacheSeconds: 21600
+        timeoutSeconds: 12

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Chat bidi layout">
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#eaf0fe"/>
+  <path d="M14 24h26" stroke="#2f6bff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M32 16l9 8-9 8" fill="none" stroke="#2f6bff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M50 40H24" stroke="#7a4dff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M32 32l-9 8 9 8" fill="none" stroke="#7a4dff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
