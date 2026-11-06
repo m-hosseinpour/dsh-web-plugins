@@ -2,8 +2,8 @@
 
 A small collection of plugins for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
 Web UI. Each plugin is a self-contained bundle — a `package.json`, a
-`cordis.patch.yml` that inserts its row into a profile, and a `client.js` that runs
-in the page — with no build step and no npm dependencies.
+`cordis.patch.yml` that inserts its row into a profile, and, for the web plugins,
+a `client.js` that runs in the page — with no build step and no npm dependencies.
 
 These are personal plugins, shared as they are. They are not part of the Harness
 and nothing here is required for it to work: install only the behaviour you want.
@@ -18,15 +18,22 @@ and nothing here is required for it to work: install only the behaviour you want
 | [session-delete](plugins/session-delete) | Adds **Delete session** to the sidebar's session menu and removes the session's log and projection from disk. |
 | [avalai-credit](plugins/avalai-credit) | Shows the remaining AvalAI package credit and main balance above the message composer. |
 | [token-cost](plugins/token-cost) | Adds US-dollar and toman cost lines to the token-usage popover, priced from AvalAI's public rates. |
+| [notify](plugins/notify) | Sends a desktop notification and plays a sound when a Session finishes, asks for permission or an answer, or ends a turn with an error or at the token limit — and stays silent while background work is still running. Host-only and Linux-only, so it has no page half. |
 
 Each directory has its own README covering what the plugin does, how it works, and
 its known limits; screenshots live in the same directory.
 
 ## Requirements
 
-- A DeepSeek Harness install with the **Web** profile (`dsh web`). Every plugin
-  here is web-only (`platform: "web"`) and does nothing in the TUI or headless
-  profiles.
+- A DeepSeek Harness install with the **Web** profile (`dsh web`). Every web
+  plugin here declares `dsh.client.platform: "web"` and does nothing in the TUI
+  or headless profiles; [notify](plugins/notify) is the one Host-only bundle,
+  has no page half, and works in any profile.
+- [notify](plugins/notify) is **Linux only**: it needs a freedesktop notification
+  daemon (`notify-send` from libnotify) and one of `paplay`, `pw-play` or
+  `ffplay`. Its icons and sounds come from KDE's theme packages; on another
+  desktop the card still appears, but a missing icon or sound file silences that
+  part of that state. macOS and Windows are not supported.
 - DSH `0.2.1-rc.5` or a later `0.2.x` release — what these plugins were written and
   tested against, and what each `package.json` declares in `engines.dsh`.
 - [avalai-credit](plugins/avalai-credit) and [token-cost](plugins/token-cost) read
@@ -91,7 +98,7 @@ Harness process with your user's permissions; the Client half (`client.js`) runs
 the Web page and can read the DOM, including your conversations. Read a plugin
 before installing it, exactly as you would any other package.
 
-What these six do with that access:
+What these seven do with that access:
 
 - **Network:** [avalai-credit](plugins/avalai-credit) asks `api.avalai.ir` for the
   account's credit, using the key from the Harness credential store; the key is
@@ -103,6 +110,10 @@ What these six do with that access:
   projection caches under `DSH_HOME` — permanently, with no trash — and records the
   deletion there so a resident agent cannot bring the session back. Everything else
   only reads.
+- **Processes:** [notify](plugins/notify) runs `notify-send` and the first audio
+  player it finds (`paplay`, `pw-play` or `ffplay`) from the Host process, each
+  under a hard timeout. It reads no files, writes none, and makes no network
+  requests.
 - **Page:** [chat-bidi](plugins/chat-bidi) adds direction attributes and alignment
   styles, [model-provider-label](plugins/model-provider-label) adds a provider tag to
   the model button, and [token-cost](plugins/token-cost) appends its two rows inside
@@ -114,7 +125,7 @@ What these six do with that access:
 plugins/<name>/
 ├── package.json        name, version, engines.dsh, dsh.bundle.patch, dsh.client
 ├── index.js            Host half — runs in the DSH process
-├── client.js           Client half — runs in the Web page
+├── client.js           Client half — runs in the Web page (web plugins only)
 ├── cordis.patch.yml    inserts the plugin row into the profile
 ├── locale/en.json      Plugin Manager title and description (en, fa)
 ├── locale/fa.json
@@ -126,10 +137,17 @@ scripts/validate.mjs
 .github/workflows/validate.yml
 ```
 
+A **Host-only** bundle is the same shape without `client.js` and without
+`dsh.client` in its manifest — it registers nothing in the page and only listens
+to Host events, like [notify](plugins/notify). The validator accepts exactly one
+of the two shapes and rejects a stray `client.js` in a package that declares no
+Client half.
+
 The directory name is not load-bearing; the names that must agree are the package
-name, the `name` of the row in `cordis.patch.yml`, and the `id` passed to
-`window.__ModuleLoader__.load` in `client.js`. `scripts/validate.mjs` checks those
-three, the manifest fields, the locale files, and the screenshot links.
+name, the `name` of the row in `cordis.patch.yml`, and — for a web plugin — the
+`id` passed to `window.__ModuleLoader__.load` in `client.js`.
+`scripts/validate.mjs` checks those, the manifest fields, the locale files, and
+the screenshot links.
 
 ## Development
 
@@ -143,8 +161,9 @@ find plugins -name '*.js' -print0 | xargs -0 -n1 node --check   # syntax
 ```
 
 When adding a plugin, follow the same shape: one directory under `plugins/`, one
-patch row whose `name` equals the package name, a Client module registered under
-that same id, an `engines.dsh` range, and a README with its known limits. Add the
+patch row whose `name` equals the package name, an `engines.dsh` range, and a
+README with its known limits. A web plugin adds a Client module registered under
+that same id; a Host-only bundle leaves `client.js` and `dsh.client` out. Add the
 plugin to the table above — the validator checks that this README links it.
 
 ## License

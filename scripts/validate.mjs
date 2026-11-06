@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 /**
- * Structural checks for every plugin in plugins/. DSH loads a bundle through
- * three names that must agree — the package name, the row inserted by
+ * Structural checks for every plugin in plugins/. A web plugin is loaded
+ * through three names that must agree — the package name, the row inserted by
  * cordis.patch.yml, and the id the Client module registers with — so a typo in
- * one of them only shows up as a dead plugin in the running app. Everything
- * here is checked from the files alone, with no Harness install required.
+ * one of them only shows up as a dead plugin in the running app. A Host-only
+ * bundle has no Client module and only the package and row names must agree.
+ * Everything here is checked from the files alone, with no Harness install
+ * required.
  *
  * Run from anywhere: `node scripts/validate.mjs`.
  */
@@ -72,12 +74,24 @@ for (const dir of dirs) {
   if (patchPath !== './cordis.patch.yml') {
     fail(where, `expected dsh.bundle.patch "./cordis.patch.yml", found ${patchPath}`);
   }
-  if (pkg.dsh?.client?.platform !== 'web') {
-    fail(where, `expected dsh.client.platform "web", found ${pkg.dsh?.client?.platform}`);
+  // Two shapes: a web plugin adds a Client half, a Host-only bundle has none.
+  const clientHalf = pkg.dsh?.client !== undefined;
+  if (clientHalf) {
+    if (pkg.dsh.client.platform !== 'web') {
+      fail(where, `expected dsh.client.platform "web", found ${pkg.dsh.client.platform}`);
+    }
+    if (!pkg.exports?.['./client']) {
+      fail(where, 'package.json exports should map "./client" to ./client.js');
+    }
   }
 
-  for (const required of ['index.js', 'client.js', 'cordis.patch.yml', 'icon.svg', 'README.md', 'locale/en.json', 'locale/fa.json']) {
-    if (!(await exists(join(base, required)))) fail(where, `missing ${required}`);
+  const required = ['index.js', 'cordis.patch.yml', 'icon.svg', 'README.md', 'locale/en.json', 'locale/fa.json'];
+  if (clientHalf) required.push('client.js');
+  for (const requiredFile of required) {
+    if (!(await exists(join(base, requiredFile)))) fail(where, `missing ${requiredFile}`);
+  }
+  if (!clientHalf && (await exists(join(base, 'client.js')))) {
+    fail(where, 'client.js exists but package.json declares no dsh.client — declare the Client half or remove the file');
   }
 
   // The package, the patch row and the Client module must all use the same name.
@@ -88,10 +102,12 @@ for (const dir of dirs) {
   if (rowIds[0] !== dir) fail(where, `patch row id "${rowIds[0]}" should match the directory name "${dir}"`);
   if (!rowNames.includes(pkg.name)) fail(where, `cordis.patch.yml row name should be "${pkg.name}", found ${rowNames.join(', ') || 'none'}`);
 
-  const client = await readFile(join(base, 'client.js'), 'utf8').catch(() => '');
-  const clientId = client.match(/__ModuleLoader__\.load\(\{[\s\S]*?\bid:\s*'([^']+)'/)?.[1];
-  if (clientId !== pkg.name) {
-    fail(where, `client.js registers as "${clientId ?? 'nothing'}", expected "${pkg.name}"`);
+  if (clientHalf) {
+    const client = await readFile(join(base, 'client.js'), 'utf8').catch(() => '');
+    const clientId = client.match(/__ModuleLoader__\.load\(\{[\s\S]*?\bid:\s*'([^']+)'/)?.[1];
+    if (clientId !== pkg.name) {
+      fail(where, `client.js registers as "${clientId ?? 'nothing'}", expected "${pkg.name}"`);
+    }
   }
 
   for (const locale of ['en', 'fa']) {

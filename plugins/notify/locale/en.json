@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "DSH notifications",
+    "description": "Desktop notification and sound when a Session finishes a task, asks for permission or an answer, or ends a turn with an error or at the output-token limit."
+  }
+}

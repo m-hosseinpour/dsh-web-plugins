@@ -1,0 +1,15 @@
+- insert:
+    - id: notify
+      name: 'dsh-notify'
+      config:
+        desktop: true
+        sound: true
+        appName: DSH
+        soundComplete: /usr/share/sounds/freedesktop/stereo/complete.oga
+        soundAttention: /usr/share/sounds/freedesktop/stereo/message-new-instant.oga
+        soundError: /usr/share/sounds/oxygen/stereo/dialog-error.ogg
+        notifyFinished: true
+        notifyPermission: true
+        notifyQuestion: true
+        notifyError: true
+        notifyTokenLimit: true
